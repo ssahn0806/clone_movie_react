@@ -1,92 +1,117 @@
-import React from "react";
-//import Potato from "./Potato";
-import PropTypes from "prop-types";
+import React, { useState, useEffect } from "react";
 
-const Food = ({ name, picture, rating }) => {
-  //console.log(props, "props");
-  //return <h3>I love {props.fav}</h3>;
-  return (
-    <div>
-      <h2> I love {name}</h2>
-      <h4> {rating}/5.0</h4>
-      <img width={200} height={200} src={picture} alt={name} />
-    </div>
-  );
-};
+// // React.Component에 정의되어 있는 내용을 상속받아 사용가능 하게됨.
+// class App extends React.Component {
+//   /*State object - variant */
+//   state = {
+//     count: 0,
+//   };
 
-const foodILike = [
-  {
-    id: 1,
-    name: "Kimchi",
-    image:
-      "http://aeriskitchen.com/wp-content/uploads/2008/09/kimchi_bokkeumbap_02-.jpg",
-    rating: 5,
-  },
-  {
-    id: 2,
-    name: "Samgyeopsal",
-    image:
-      "https://3.bp.blogspot.com/-hKwIBxIVcQw/WfsewX3fhJI/AAAAAAAAALk/yHxnxFXcfx4ZKSfHS_RQNKjw3bAC03AnACLcBGAs/s400/DSC07624.jpg",
-    rating: 4.9,
-  },
-  {
-    id: 3,
-    name: "Bibimbap",
-    image:
-      "http://cdn-image.myrecipes.com/sites/default/files/styles/4_3_horizontal_-_1200x900/public/image/recipes/ck/12/03/bibimbop-ck-x.jpg?itok=RoXlp6Xb",
-    rating: 3.8,
-  },
-  {
-    id: 4,
-    name: "Doncasu",
-    image:
-      "https://s3-media3.fl.yelpcdn.com/bphoto/7F9eTTQ_yxaWIRytAu5feA/ls.jpg",
-    rating: 4.8,
-  },
-  {
-    id: 5,
-    name: "Kimbap",
-    image:
-      "http://cdn2.koreanbapsang.com/wp-content/uploads/2012/05/DSC_1238r-e1454170512295.jpg",
-    rating: 3.2,
-  },
-];
+//   // React can't mutate state Directly.
+//   // By setState -> update State -> Rerender -> update visual source;
+//   // Targeting the update source - do not refresh all.
 
-const renderFood = (dish) => {
-  return (
-    <Food
-      key={dish.id}
-      name={dish.name}
-      picture={dish.image}
-      rating={dish.rating}
-    />
-  );
-};
+//   add = () => {
+//     //console.log("add");
+//     // this.state.count++;
+//     // this.setState({ count: 1 });
+//     // this.setState({ count: this.state.count + 1 });
+//     // this.state.count = ReadOnly
+//     this.setState((current) => ({ count: current.count + 1 }));
+//   };
 
-function App() {
-  // console.log(foodILIke.map(renderFood));
-  return (
-    //<div className="App"/>
-    <div>
-      <h1>Hello</h1>
-      {/*
-      <Food
-        fav="kimchi"
-        // something={true}
-        // papapapa={["hello", 1, 2, 3, 4, true]}
-      />
-      <Food fav="ramen" />
-      <Food fav="samgiopsal" />
-      <Food fav="chukumi" />
-      */}
-      {foodILike.map(renderFood)}
-    </div>
-  );
+//   minus = () => {
+//     //console.log("minus");
+//     //this.state.count--;
+//     // this.setState({ count: -1 });
+//     // this.setState({ count: this.state.count - 1 });
+//     this.setState((current) => ({ count: current.count - 1 }));
+//   };
+
+//   constructor(props) {
+//     super(props);
+//     console.log("This is constructor");
+//   }
+
+//   componentDidMount() {
+//     console.log("This is componentDidMount");
+//   }
+
+//   componentDidUpdate() {
+//     console.log("This is componentDidUpdate");
+//   }
+
+//   componentWillUnmount() {
+//     console.log("This is componentWillUnmount");
+//   }
+//   /* Class component returns JSX by render methods<상속에 의해 override> */
+//   render() {
+//     console.log("This is render");
+//     // return <h1>I'm a class component</h1>;
+//     // return <h1>The number is: {this.state.count}</h1>;
+//     return (
+//       <div>
+//         <h1>The number is: {this.state.count}</h1>
+//         {/*manipulate state value by button's event handler*/}
+//         <button onClick={this.add}>Add</button>
+//         <button onClick={this.minus}>Minus</button>
+//       </div>
+//     );
+//   }
+// }
+
+// const App = () => {
+//   const [count, setCount] = useState(0);
+
+//   const add = () => {
+//     setCount((prev) => prev + 1);
+//   };
+
+//   const minus = () => {
+//     setCount((prev) => prev - 1);
+//   };
+//   return (
+//     <div>
+//       <h1>The number is : {count} </h1>
+//       <button onClick={add}>Add</button>
+//       <button onClick={minus}>Minus</button>
+//     </div>
+//   );
+// };
+
+class App extends React.Component {
+  state = {
+    isLoading: true,
+    movies: [],
+  };
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({ isLoading: false });
+    }, 5000);
+  }
+  render() {
+    const { isLoading } = this.state;
+    return (
+      <div>
+        {/* {this.state.isLoading ? "로딩중입니다..." : "로딩이 완료되었습니다."} */}
+        {isLoading ? "로딩중입니다..." : "로딩이 완료되었습니다."}
+      </div>
+    );
+  }
 }
 
-Food.propTypes = {
-  name: PropTypes.string.isRequired,
-  picture: PropTypes.string.isRequired,
-  rating: PropTypes.number,
-};
+// const App = () => {
+//   const [isLoading, setIsLoading] = useState(true);
+//   const [movies, setMovies] = useState([]);
+
+//   useEffect(() => {
+//     console.log("component DidMount");
+//     setTimeout(() => {
+//       /* Data Loading */
+//       setIsLoading(false);
+//     }, 5000);
+//   }, []);
+//   return <div>{isLoading ? "로딩중입니다..." : "로딩이 완료되었습니다."}</div>;
+// };
 export default App;
